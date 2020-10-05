@@ -1,0 +1,22 @@
+Subrotina
+   comandos criados pelo usuario (programador)
+   ou 
+   trechos de codigo rotulados e parametrizáveis.
+
+ex:
+
+void mensagem(char nome[])
+{
+   printf("oi, %s\n", nome);
+}
+
+int main(void)
+{
+    char nome[100];
+    mensagem("Desconhecido");
+    printf("entre com seu nome:");
+    gets(nome);
+    mensagem(nome);
+    return 0;
+}
+
