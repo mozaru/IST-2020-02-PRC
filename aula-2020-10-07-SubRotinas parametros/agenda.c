@@ -26,6 +26,17 @@ void limparTela()
 #endif
 }
 
+void pause()
+{
+#ifdef _WIN32
+    system("pause");
+#else
+    //system("read -n1 -r -p \"Press any key to continue...\" key");
+    printf("Press any key to continue...\n");
+    getchar();
+#endif    
+}
+
 void lerString(char str[], int max)
 {
    fgets(str, max, stdin);
@@ -114,6 +125,7 @@ void filtrar(TAgenda a, char info[])
 int menu()
 {
    int opc;
+   char aux[10];
    do
    {
       limparTela();
@@ -124,9 +136,9 @@ int menu()
       printf("5. listar filtrando por parte do nome ou telefone\n");
       printf("6. sair\n");
       printf("\nEntre com a sua opcao:");
-      scanf("%i", &opc);
+      scanf("%d", &opc);
    } while (opc < 1 || opc > 6);
-   fflush(stdin);
+   lerString(aux,10);
    limparTela();
    return opc;
 }
@@ -146,7 +158,7 @@ int main(void)
          lerContato(&ficha);
          inserir(&agenda, ficha);
          printf("Contato inserido com sucesso!\n");
-         system("pause");
+         pause();
          break;
       case 2: //remover
          printf("Entre com o nome ou telefone do contato a ser removido:");
@@ -155,7 +167,7 @@ int main(void)
             printf("Contato removido com sucesso!\n");
          else
             printf("Contato nao encontrado!");
-         system("pause");
+         pause();
          break;
       case 3: //alterar
          printf("Entre com o nome ou telefone do contato a ser alterado:");
@@ -165,24 +177,24 @@ int main(void)
             printf("Contato alterado com sucesso!\n");
          else
             printf("Contato nao encontrado!\n");
-         system("pause");
+         pause();
          break;
       case 4: //listar
          listar(agenda);
-         system("pause");
+         pause();
          break;
       case 5: //filtrar
          printf("Entre com parte do nome ou telefone do contato a ser filtrado:");
          lerString(aux, _MAX_STRING_);
          filtrar(agenda, aux);
-         system("pause");
+         pause();
          break;
       case 6: //sair
          acabou = 1;
          break;
       default: //nenhuma das alternativas
          printf("alternativa nao implementada!\n");
-         system("pause");
+         pause();
          break;
       }
    }
