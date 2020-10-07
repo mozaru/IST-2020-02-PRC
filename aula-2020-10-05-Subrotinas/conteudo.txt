@@ -63,23 +63,23 @@ exercicio de exemplo:
 
 #include<stdio.h>
 
-int fat(int n)
+int fat(int x)
 {
    int i,resp;
    resp=1;
-   for(i=n; i>0; i--)
+   for(i=x; i>0; i--)
      resp = resp * i;
    return resp;   
 }
 
 int main(void)
 {
-   int n;
    printf("entre com um numero:");
    scanf("%d",&n);
 
-   printf(" o fatorial de %d eh %d\n", b, fat(n));
+   printf(" o fatorial de %d eh %d\n", n, fat(n));
    return 0;
 
 } 
+
 
