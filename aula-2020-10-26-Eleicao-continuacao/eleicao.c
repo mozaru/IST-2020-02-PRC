@@ -71,7 +71,7 @@ void limparTela()
 {
    system("cls");
    printf("===================================================================================================\n");
-   printf("! ISSO … T√” B√‘!                E L E I C O E S    2 0 2 0                     FAETERJ/Petropolis!\n");
+   printf("!                                E L E I C O E S    2 0 2 0                     FAETERJ/Petropolis!\n");
    printf("===================================================================================================\n");
    printf("\n\n");
 }
@@ -96,6 +96,12 @@ void lerAluno(TAluno *a)
    */
 }
 
+void mostrarAluno(TAluno a)
+{
+   printf("Nome:%s\n", a.nome);
+   printf("CPF:%s\n", a.cpf);
+   printf("E-Mail:%s\n", a.email);
+}
 
 //--------------------- implementacao Candidato -------------
 
@@ -109,6 +115,13 @@ void lerCandidato(TCandidato *c)
    (*c).votos = 0 ;
 }
 
+void mostrarCandidato(TCandidato c)
+{
+   printf("Nome:%s\n", c.nome);
+   printf("Numero:%i\n", c.numero);
+   printf("Chapa:%s\n", c.chapa);
+}
+
 //--------------------- implementacao Alunos -------------
 void inserirAluno(TAlunos *l, TAluno a)
 {
@@ -116,12 +129,30 @@ void inserirAluno(TAlunos *l, TAluno a)
    (*l).qtd++;
 } 
 
+int obterIndiceAluno(TAlunos l, char cpf[])
+{
+   int i=0;
+   logico achou = falso;
+   while (!achou && i<l.qtd)
+      if (strcmp(l.v[i].cpf,cpf)==0)
+         achou = verdadeiro;
+      else
+         i++;
+   return achou?i:-1;
+}
+
 void listarAlunos(TAlunos l)
 {
    int i;
+   printf("  #   %-30s %-50s %20s\n","nome", "e-mail", "CPF");
+   for(i=0;i<108;i++)
+      printf("-");
+   printf("\n");
    for(i=0;i<l.qtd;i++)
-      printf("%s - %s - %s\n", l.v[i].nome, l.v[i].email, l.v[i].cpf);
-   system("pause");
+      printf("%3i - %-30s %-50s %20s\n", i+1, l.v[i].nome, l.v[i].email, l.v[i].cpf);
+   for(i=0;i<108;i++)
+      printf("-");
+   printf("\n");
 }
 
 //--------------------- implementacao Candidatos -------------
@@ -134,12 +165,28 @@ void inserirCandidato(TCandidatos *l, TCandidato c)
 void listarCandidatos(TCandidatos l)
 {
    int i;
+   printf("  #   %4s %-30s %-20s %5s\n", "Num.", "Nome", "Chapa", "Votos");
+   for(i=0;i<68;i++)
+      printf("-");
+   printf("\n");
    for(i=0;i<l.qtd;i++)
-      printf("%i - %s - %s - %i\n", l.v[i].numero, l.v[i].nome, l.v[i].chapa, l.v[i].votos);
-   system("pause");
+      printf("%3i - %4i %-30s %-20s %5i\n", i+1, l.v[i].numero, l.v[i].nome, l.v[i].chapa, l.v[i].votos);
+   for(i=0;i<68;i++)
+      printf("-");
+   printf("\n");
 }
 
-
+int obterIndiceCandidato(TCandidatos l, int numero)
+{
+   int i=0;
+   logico achou = falso;
+   while (!achou && i<l.qtd)
+      if (l.v[i].numero == numero)
+         achou = verdadeiro;
+      else
+         i++;
+   return achou?i:-1;
+}
 
 //--------------------- implementacao eleicao -------------
 void inicializarEleicao(TEleicao *e)
@@ -198,12 +245,75 @@ int menu(TEstado estado)
    return opc;
 }
 
-void realizarVoto(TEleicao *e)
+void computarVoto(TEleicao *e, char cpf[], int numero)
 {
+   int posEleitor = obterIndiceAluno((*e).eleitores, cpf);
+   int posCandidato = obterIndiceCandidato((*e).candidatos, numero);
+   if (posEleitor>=0 && posEleitor<(*e).eleitores.qtd && !(*e).eleitores.v[posEleitor].votou)
+   {
+      (*e).eleitores.v[posEleitor].votou = verdadeiro;   
+      if (posCandidato>=0 && posCandidato < (*e).candidatos.qtd)
+         (*e).candidatos.v[posCandidato].votos++;
+   }
+}
+
+logico realizarVoto(TEleicao *e)
+{
+   char cpf[_TAM_CPF_];
+   int pos;
+   lerString("CPF:", cpf,_TAM_CPF_);
+   pos = obterIndiceAluno((*e).eleitores, cpf);
+   if (pos < 0) {
+      printf("Eleitor com o cpf:%s nao encontrado!\n",cpf);
+      return falso;
+   } else if ((*e).eleitores.v[pos].votou) {
+      printf("Eleitor com o cpf:%s ja votou!\n",cpf);
+      return falso;
+   } else {
+      TAluno a = (*e).eleitores.v[pos];
+      TCandidato c;
+      char letra;
+      int numero;
+      do {
+         limparTela();  
+         mostrarAluno(a);
+         printf("\nEntre com o numero do candidato:");
+         scanf("%i",&numero);
+         do {
+            limparTela();
+            if (numero==0)
+               printf("Voto em Branco!\n");
+            else {
+               pos = obterIndiceCandidato((*e).candidatos, numero);
+               if (pos < 0)
+                  printf("Voto nulo!\n");
+               else {
+                  c = (*e).candidatos.v[pos];
+                  mostrarCandidato(c);
+               }
+            }
+            printf("\n\nConfirma (S/N)?\n");
+            scanf("%c",&letra);
+         } while (letra!='S' && letra!='s' && letra!='N' && letra!='n');
+      } while (letra!='S' && letra!='s');
+      computarVoto(&(*e), cpf, numero);
+      return verdadeiro;
+   }
+} 
+
+int compVotos(const void *pa, const void *pb)
+{
+   TCandidato a = *(TCandidato*)pa;
+   TCandidato b = *(TCandidato*)pb;
+   if (a.votos>b.votos)       return -1;
+   else if (a.votos<b.votos)  return  1;
+   else                       return  0;
 }
 
 void listarResultado(TEleicao e)
 {
+   qsort(e.candidatos.v, e.candidatos.qtd, sizeof(TCandidato), compVotos);
+   listarCandidatos(e.candidatos);
 }
 
 int main(void)
@@ -253,13 +363,17 @@ int main(void)
             break;     
 	      case 21:   //realizar voto
             limparTela();
-            realizarVoto(&e);
+            if (realizarVoto(&e))
+            {
+               limparTela();
+               printf("Voto computado com sucesso!");
+            }
             pausar();
             break;     
 	      case 22:   //encerrar votacao
             limparTela();
             e.estado = encerrada;
-            printf("VotaÁ„o encerrada!\n");
+            printf("Vota√ß√£o encerrada!\n");
             pausar();
             break;     
 	      case 31:    //listar resultado
