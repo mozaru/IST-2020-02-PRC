@@ -1,0 +1,75 @@
+1. passo  -- identificar as entidades que estao sendo manipuladas.
+  quem tem informacao?
+
+  aluno
+     votou ou nao
+  candidato
+     votos -> qtd votos 
+ 
+  alunos -> conjunto de alunos
+
+  candidatos -> conjunto de candidatos
+
+
+2. passo -- para cada entidade deve-se definir o dominio
+
+  aluno:
+     nome: string[30]
+     cpf : string[15]
+     email: string[50]
+     votou: logico
+
+  candidato:
+     numero: inteiro
+     nome  : string[30]
+     chapa : string[20]
+     votos : inteiro
+
+  alunos:
+     v : vetor[500] de aluno
+    qtd: inteiro;
+ 
+  candidatos:
+     v : vetor[30] de candidato
+    qtd: inteiro;
+
+  eleicao:
+    nome: string[100]
+    estado: (preparacao, emvotacao, encerrada)
+    eleitores: alunos
+    candidatos: candidatos
+   
+3. passo -- identificar as operações para cada entidade
+
+   aluno:
+       ler
+
+   alunos:
+       inserir
+       remover
+       alterar   
+       buscaPorCPF
+       
+   candidato:
+       ler
+
+   candidatos:
+       inserir
+       remover
+       alterar 
+       buscaPorNumero
+
+   eleicao:      
+       iniciar
+       encerrar
+       realizarVotacao
+       mostrarResultado 
+       menu       
+
+4. passo -- para cada entidade criar uma estrutura e para cada operação criar uma subrotina onde o primeiro 
+parametro é a entidade.
+
+5. passo -- fazer o programa principal
+
+
+  
