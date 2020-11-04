@@ -5,6 +5,7 @@
 #include"alunos.h"
 #include"candidatos.h"
 #include"eleicao.h"
+#include"uteis.h"
 #include"arqtxt.h"
 
 #if defined(_WIN32) || defined(_WINDOWS)
