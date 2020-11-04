@@ -1,0 +1,2 @@
+1,candidato1,1,0
+2,candidato2,2,0
