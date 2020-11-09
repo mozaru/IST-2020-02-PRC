@@ -1,6 +1,7 @@
 #include"alunos.h"
 
 #include<stdio.h>
+#include<string.h>
 
 #include"uteis.h"
 #include"tipos.h"
