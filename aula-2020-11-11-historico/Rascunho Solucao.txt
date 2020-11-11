@@ -1,0 +1,22 @@
+solução:
+1. criar uma estrutura/registro para representar uma
+   disciplina
+2. criar uma estrutura/registro para representar 
+  o historico (conjunto de disciplinas)
+
+3. criar as subrotinas para a estrutura disciplina
+   3.1 - ler -> para ler os dados de uma disciplina
+   3.2 - media -> retorna a media de uma disciplina
+   3.3 - mostrar -> mostra os dados de uma disciplina
+
+4. criar as subrotinas para o historico
+   4.1 - inicializar -> inicializa um historico como vazio
+   4.2 - inserir -> inserir uma disciplina (so insere nao le e nao escreve nada na tela)
+   4.3 - remover -> remove uma disciplina do historico (so remove nao le e nao escreve nada na tela)
+   4.4 - alterar -> altera os dados de uma disciplina (so substitui, nao le e nao escreve nada na tela)
+   4.5 - listar -> lista todas as disciplinas na tela
+   4.6 - cr -> calcula e retorna o valor do CR, (nao le e nao escreve nada na tela)
+   4.7 - historico -> lista e mostra o CR
+
+5. programa principal
+   onde tem a iteração com o usuario, leituras e escritas que faltam. Mostrar menu, etc...
