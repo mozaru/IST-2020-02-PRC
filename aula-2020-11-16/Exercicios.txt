@@ -1,0 +1,180 @@
+Exercicios da URI
+
+
+
+problema 1158 
+int main(void) { 
+    int i,n,x,y;
+    scanf("%d", &n);
+    for(i=0; i<n; i++) { 
+       scanf("%d %d",&x,&y); 
+       printf("%d\n", somaImpares(x,y));
+    } 
+    return 0; 
+} 
+
+
+problema 1164 
+int main(void) { 
+   int i,n,num; 
+   scanf("%d", &n); 
+   for(i=0; i<n; i++) { 
+     scanf("%d",&num); 
+     if (ehPerfeito(num)) 
+        printf("%d eh perfeito\n",num); 
+     else 
+        printf("%d nao eh perfeito\n",num); 
+     } 
+     return 0; 
+} 
+
+
+problema 1157 
+int main(void) { 
+   int n; 
+   scanf("%d", &n); 
+   listarDivisores(n); 
+   return 0; 
+} 
+
+
+problemas 1379 
+   int main(void) { 
+      int a,b,c; 
+      scanf("%d %d",&a, &b); 
+      while (a>0 && b>0) { 
+          mediana = medianaMinima(a,b); 
+          scanf("%d %d",&a, &b); 
+      } 
+    return 0; 
+} 
+
+
+problemas 1113 
+    int main(void) { 
+        int x,y; 
+        while (scanf("%d %d",&x, &y)==2 && x!=y) 
+            cresc_descr(x,y); 
+        return 0; 
+} 
+
+
+problemas 2456 
+
+int main(void) { 
+     int vet[5]; 
+     char Letra; 
+     ler5Cartas(vet); 
+     letra = cresc_descr_nulo(vet); 
+     printf("%c\n",letra); 
+     return 0; 
+}
+
+
+cifra de cesar
+1253
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+
+int main()
+{
+	int n,i;
+	char frase[1000];
+	int deslocamento;
+	
+	scanf("%d\n",&n);
+	for ( i=1; i<=n; i=i+1 ){
+		scanf("%[^\n]%*c",frase);
+		scanf("%d\n",&deslocamento);
+		caesar(frase, deslocamento)
+		printf("%s\n",frase);
+	}
+    return 0;
+}
+
+
+1015
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+
+int main()
+{
+	int n,i;
+	TPonto p1,p2;
+	double dist;
+	
+	lerPonto(&p1);
+	lerPonto(&p2);
+	dist = distancia(p1,p2);
+	printf("%.4f\n", dist); 	
+
+	return 0;
+}
+
+
+1036
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+#define RAIZ_1	1
+#define RAIZ_2	2
+
+
+
+int main()
+{
+	int n,i;
+	TEq2G eq;
+	ler(&eq);
+	
+	if (delta(eq)<0)
+	    printf("Impossivel calcular\n");
+	else 
+	   printf("R1=%.5lf\nR2=%.5lf\n",raiz(eq,RAIZ_1), raiz(eq,RAIZ_2));
+
+	return 0;
+}
+
+1042
+#include<stdlib.h>
+#include<stdio.h>
+
+int main()
+{
+	int a,b,c,i,x,y,z;
+	
+	ler(&a,&b,&c);
+	x = a;
+	y = b;
+	z = c;
+	ordenar(&x,&y,&z);
+	printf("%i\n%i\n%i\n\n%i\n%i\n%i\n",x,y,z,a,b,c);
+	return 0;
+}
+
+2534
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+
+int main()
+{
+	int n,q,pos;	
+	int notas[200];
+	while ( scanf("%d %d",&n, &q)==2 ){
+		lerVetor(notas,n);
+                //a funcao qsort ja existe no c
+                //vc so precisa criar a compint (se vira malandro)
+		qsort(notas,n, sizeof(int), compint); 
+		scanf("%d",&pos);
+		printf("%d\n",notas[pos-1]);
+	}
+    return 0;
+}
+
