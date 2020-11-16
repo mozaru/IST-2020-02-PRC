@@ -1,48 +1,8 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-
 #include"disciplinas.h"
-
-
-void lerString(char str[], int max)
-{
-   int tam;
-   fflush(stdin);
-   fgets(str, max, stdin);
-   tam = strlen(str);
-   if (str[tam-1]=='\n')
-      str[tam-1]='\0';
-}
 
 float mediaDisciplina(Disciplina d)
 {
    return (d.nota1+d.nota2)/2;
-}
-
-void lerDisciplina(Disciplina *d)  
-{
-   printf("Codigo:");		scanf("%d",& (*d).codigo);
-   printf("Nome:");		lerString((*d).nome, _NOME_MAX_LEN_);
-   printf("Professor:");	lerString((*d).professor, _NOME_MAX_LEN_);
-   printf("Creditos:");		scanf("%d",& (*d).creditos);
-   printf("Semestre:");		scanf("%d",& (*d).semestre);
-   printf("Ano:");		scanf("%d",& (*d).ano);
-   printf("Nota1:");		scanf("%f",& (*d).nota1);
-   printf("Nota2:");		scanf("%f",& (*d).nota2);
-}
-
-void mostrarDisciplina(Disciplina d)
-{
-   printf("Codigo:%d\n",d.codigo);
-   printf("Nome:%s\n",d.nome);
-   printf("Professor:%s\n",d.professor);
-   printf("Creditos:%d\n",d.creditos);
-   printf("Semestre:%d\n",d.semestre);
-   printf("Ano:%d\n",d.ano);
-   printf("Nota1:%5.2f\n",d.nota1);
-   printf("Nota2:%5.2f\n",d.nota2);
-   printf("Media:%5.2f\n",mediaDisciplina(d));
 }
 
 void inicializar(Historico *h)
@@ -91,25 +51,6 @@ void alterar(Historico *h, int codigo, Disciplina d)
        (*h).vet[pos] = d;
 }
 
-void listar(Historico h)
-{
-   int i;
-   printf("%-30s %5s %4s %4s %5s\n",
-	     "Nome", "cred.", "sem.", "ano","media");
-   for(i=0;i<62;i++)
-     printf("-");
-   printf("\n");
-   for (i=0; i<h.qtd; i++)
-   {
-      Disciplina d = h.vet[i];
-      printf("%-30s   %02i    %i  %04i %5.2f\n", 
-	     d.nome, d.creditos, d.semestre, d.ano, mediaDisciplina(d));
-   }
-   for(i=0;i<62;i++)
-     printf("-");
-   printf("\n");
-}
-
 float CR(Historico h)
 {
    float soma;
@@ -125,8 +66,3 @@ float CR(Historico h)
    return creditos==0?0:soma/creditos;
 }
 
-void mostrar(Historico h)
-{
-   listar(h);
-   printf("Coeficiente de Rendimento (CR)=%.2f\n", CR(h));
-}

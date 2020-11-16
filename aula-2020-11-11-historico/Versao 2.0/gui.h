@@ -3,9 +3,13 @@
 
 #include "disciplinas.h"
 
+void inicializarInterface(int argc, char*argv[]);
+void finalizarInterface();
+void mostrarMensagem(char msg[]);
+int lerCodigo();
 int menu();
-int frmDisciplina(Disciplina *d);
-void listarDisciplinas(Historico h);
-
+void mostrarDisciplina(Disciplina d);
+int lerDisciplina(Disciplina *d);
+void mostrarHistorico(Historico h);
 
 #endif

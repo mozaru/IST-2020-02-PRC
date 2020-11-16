@@ -21,16 +21,11 @@ typedef struct {
 } Historico;
 
 float mediaDisciplina(Disciplina d);
-void lerDisciplina(Disciplina *d);
-void mostrarDisciplina(Disciplina d);
-
 void inicializar(Historico *h);
 void inserir(Historico *h, Disciplina d);
 int existe(Historico h, int codigo);
 void remover(Historico *h, int codigo);
 void alterar(Historico *h, int codigo, Disciplina d);
-void listar(Historico h);
 float CR(Historico h);
-void mostrar(Historico h);
 
 #endif

@@ -3,7 +3,9 @@
 #include <iup.h>
 #include <iupcontrols.h>
 
-int callbackAcao( Ihandle *self )
+#include "disciplinas.h"
+
+int callbackAcaoListar( Ihandle *self )
 {
     char *vl = IupGetAttribute(self, "TITLE");
     if (strcmp(vl,"Inserir")==0)
@@ -18,24 +20,19 @@ int callbackAcao( Ihandle *self )
         return IUP_CLOSE;
 }
 
-Ihandle *CriarBotao(char Nome[])
+Ihandle *CriarBotaoListar(char Nome[])
 {
   Ihandle *btn = IupButton(Nome, NULL);
-  IupSetCallback(btn, "ACTION", (Icallback) callbackAcao);
+  IupSetCallback(btn, "ACTION", (Icallback) callbackAcaoListar);
   IupSetAttribute(btn, "USERSIZE", "180x60");
   return btn;
 }
 
 
-
-
-int main(int argc, char **argv)
+int frmLlistarDisciplinas(Historico h)
 {
   Ihandle *dlg, *label, *vbox, *sep, *pnlBotoes, *pnlDados; 
   int i;
-  IupOpen(&argc, &argv);
-  IupControlsOpen();
-
 
   label =  IupLabel("Disciplinas");
   IupSetAttribute(label, "BGCOLOR", "0 0 255");
@@ -47,8 +44,8 @@ int main(int argc, char **argv)
   IupSetAttribute(sep, "COLOR", "0 0 200");
 
   pnlBotoes = IupHbox(
-    CriarBotao("Ok"),
-    CriarBotao("Cancelar"),
+    CriarBotaoListar("Ok"),
+    CriarBotaoListar("Cancelar"),
     NULL);
   IupSetAttribute(pnlBotoes, "GAP", "50");
   IupSetAttribute(pnlBotoes, "MARGIN", "0x20");
@@ -87,34 +84,22 @@ int main(int argc, char **argv)
   //IupSetAttribute(pnlDados, "MASKFLOAT2:9", "0.00:10.00");
   IupSetAttribute(pnlDados,"RASTERSIZE","400x");
   
-  for(i=1;i<10; i++)
+  for(i=1;i<=h.qtd; i++)
   {
-        //IupSetIntId2(pnlDados, "", i, 0, i+1);
-        IupSetfAttributeId2(pnlDados, "", i, 0, "%03d", i+1);
-        IupSetIntId2(pnlDados, "", i, 1, 123*i);
-        IupSetAttributeId2(pnlDados, "", i, 2, "Joao");
-        IupSetAttributeId2(pnlDados, "", i, 3, "Gerson");
-        IupSetIntId2(pnlDados, "", i, 4, 4);
-        IupSetIntId2(pnlDados, "", i, 5, 2);
-        IupSetIntId2(pnlDados, "", i, 6, 2020);
-        //IupSetDoubleId2(pnlDados, "", i, 7, 8.25);
-        IupSetfAttributeId2(pnlDados, "", i, 7, "%5.2f", 8.25);
-        //IupSetDoubleId2(pnlDados, "", i, 8, 10.00);
-        IupSetfAttributeId2(pnlDados, "", i, 8, "%5.2f", 10.00);
-        //IupSetDoubleId2(pnlDados, "", i, 9, 9.25);
-        IupSetfAttributeId2(pnlDados, "", i, 9, "%5.2f", 9.2);
-        
-/*  IupSetAttribute(pnlDados, "0:2", "Nome");
-  IupSetAttribute(pnlDados, "0:3", "Professor");
-  IupSetAttribute(pnlDados, "0:4", "Creditos");
-  IupSetAttribute(pnlDados, "0:5", "Sem");
-  IupSetAttribute(pnlDados, "0:6", "Ano");
-  IupSetAttribute(pnlDados, "0:7", "Nota1");
-  IupSetAttribute(pnlDados, "0:8", "Nota2");
-  IupSetAttribute(pnlDados, "0:9", "Media");*/
+    Disciplina d =h.vet[i-1];
+    mostrarDisciplina(d);
+    IupSetfAttributeId2(pnlDados, "", i, 0, "%03d", i+1);
+    IupSetIntId2(pnlDados, "", i, 1, d.codigo);
+    IupSetfAttributeId2(pnlDados, "", i, 2,"%s", d.nome);
+    IupSetfAttributeId2(pnlDados, "", i, 3, d.professor);
+    IupSetIntId2(pnlDados, "", i, 4, d.creditos);
+    IupSetIntId2(pnlDados, "", i, 5, d.semestre);
+    IupSetIntId2(pnlDados, "", i, 6, d.ano);
+    IupSetDoubleId2(pnlDados, "", i, 7, 8.25);
+    IupSetfAttributeId2(pnlDados, "", i, 7, "%5.2f", d.nota1);
+    IupSetfAttributeId2(pnlDados, "", i, 8, "%5.2f", d.nota2);
+    IupSetfAttributeId2(pnlDados, "", i, 9, "%5.2f", mediaDisciplina(d));
   }
-
-
 
   vbox = IupVbox(
     label,
@@ -138,6 +123,5 @@ int main(int argc, char **argv)
 
   IupMainLoop();
 
-  IupClose();
-  return EXIT_SUCCESS;
+  IupDestroy(dlg);
 }

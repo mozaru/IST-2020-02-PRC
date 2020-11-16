@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <iup.h>
 
 #include "disciplinas.h"
@@ -24,7 +25,7 @@ Ihandle *CriarBotaoDisc(char Nome[])
   return btn;
 }
 
-Ihandle *CriarEntrada(char Nome[], int Qtd, char valor[])
+Ihandle *AdicionarEntrada(Ihandle *pnlDados, char Nome[], int Qtd, char valor[])
 {
   Ihandle *lbl = IupLabel(Nome);
   IupSetAttribute(lbl, "USERSIZE",  "150x");
@@ -38,8 +39,8 @@ Ihandle *CriarEntrada(char Nome[], int Qtd, char valor[])
   Ihandle *pnl = IupHbox( lbl,txt, NULL);
 //  IupSetAttribute(lbl, "USERSIZE", "180x60");
  // IupSetAttribute(lbl, "USERSIZE", "180x60");
-
-  return pnl;
+  IupAppend(pnlDados, pnl);
+  return txt;
 }
 
 char *ftoa(float vl, char aux[])
@@ -72,14 +73,14 @@ int frmDisciplina(Disciplina *d)
 
   pnlDados = IupMultiBox(NULL);
   
-  IupAppend(pnlDados, tbxCodigo=CriarEntrada("Codigo", 10, itoa((*d).codigo, aux, 10))); 
-  IupAppend(pnlDados, tbxNome=CriarEntrada("Nome", 35, (*d).nome)); 
-  IupAppend(pnlDados, tbxCreditos=CriarEntrada("Creditos", 4, itoa((*d).creditos, aux, 10))); 
-  IupAppend(pnlDados, tbxSemestre=CriarEntrada("Semestre", 2, itoa((*d).semestre, aux, 10))); 
-  IupAppend(pnlDados, tbxAno=CriarEntrada("Ano", 5, itoa((*d).ano, aux, 10))); 
-  IupAppend(pnlDados, tbxNota1=CriarEntrada("Nota1", 5, ftoa((*d).nota1, aux))); 
-  IupAppend(pnlDados, tbxNota2=CriarEntrada("Nota2", 5, ftoa((*d).nota2, aux))); 
-  IupAppend(pnlDados, tbxProfessor=CriarEntrada("Professor", 35,(*d).professor)); 
+  tbxCodigo=AdicionarEntrada(pnlDados, "Codigo", 10, itoa((*d).codigo, aux, 10)); 
+  tbxNome=AdicionarEntrada(pnlDados, "Nome", 35, (*d).nome); 
+  tbxCreditos=AdicionarEntrada(pnlDados, "Creditos", 4, itoa((*d).creditos, aux, 10)); 
+  tbxSemestre=AdicionarEntrada(pnlDados, "Semestre", 2, itoa((*d).semestre, aux, 10)); 
+  tbxAno=AdicionarEntrada(pnlDados, "Ano", 5, itoa((*d).ano, aux, 10)); 
+  tbxNota1=AdicionarEntrada(pnlDados, "Nota1", 5, ftoa((*d).nota1, aux)); 
+  tbxNota2=AdicionarEntrada(pnlDados, "Nota2", 5, ftoa((*d).nota2, aux)); 
+  tbxProfessor=AdicionarEntrada(pnlDados, "Professor", 35,(*d).professor); 
 
   vbox = IupVbox(
     label,
@@ -106,15 +107,13 @@ int frmDisciplina(Disciplina *d)
   if (opcDisc==1)
   {
       (*d).codigo = IupGetInt(tbxCodigo, "VALUE");
-      //strcpy((*d).nome,IupGetAttribute(tbxNome, "VALUE"));
+      strcpy((*d).nome,IupGetAttribute(tbxNome, "VALUE"));
       (*d).creditos = IupGetInt(tbxCreditos, "VALUE");
       (*d).semestre = IupGetInt(tbxSemestre, "VALUE");
       (*d).ano = IupGetInt(tbxAno, "VALUE");
       (*d).nota1 = IupGetFloat(tbxNota1, "VALUE");
       (*d).nota2 = IupGetFloat(tbxNota2, "VALUE");
-      //strcpy((*d).professor,IupGetAttribute(tbxProfessor, "VALUE"));
-      mostrarDisciplina(*d);
-      system("pause");
+      strcpy((*d).professor,IupGetAttribute(tbxProfessor, "VALUE"));
   }
   
   IupDestroy(dlg);
