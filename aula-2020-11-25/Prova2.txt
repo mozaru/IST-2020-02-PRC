@@ -1,0 +1,62 @@
+Trabalho 2 de PRC
+
+Regras:
+   1 - enviar o trabalho por email para mozar.silva@gmail.com
+   2 - assunto do email "TRAB IST 2020 02 PRC", sem as aspas mas com os espacos
+   3 - nao será aceito trabalho depois do prazo
+   4 - prazo de entrega 09-dez-2020 23:59
+   5 - grupo de no maximo 3 pessoas (no maximo, entao pode fazer sozinho)
+   6 - no corpo do email deve-se ter o nome completo de todos os participantes
+   7 - zipar todos os arquivos .h e .c para enviar (somente os arquivos fontes, ou seja, .h e .c) nome_arquivo.zip
+   8 - criar uma pasta para cada exercicio contendo os .h e os .c 
+   9 - o nome das pastas deve ser o "exDD", trocar o DD para o numero da questao com zero na frente se necessário
+   10- todo o codigo fonte será analisado, juntamente com a qualidade do codigo e comparado com os dos colegas
+       para rankear e pontuar.
+   11- Exercicios iguais serão anulados 
+       Se o mesmo exercicio for igual ou equivalente em dois ou mais grupos
+         o exercicio será descartado para os grupos envolvidos tendo sua nota zerada, no exercicio.
+   12- Se mais de 3 exercicios forem iguais nos grupos a nota tirada será dividida pelo numero de grupos.
+   13- Se mais de 3 pessoas participarem de um grupo, será assumido que são dois grupos e logo terão a nota
+         dividida uma vez que todos os exercicios são iguais (neste caso especifico os exercicios nao serão zerados).
+   
+Exercicios:
+
+1-(2.5) Fazer uma agenda de contatos, onde deve ser possivel realizar as seguintes operacoes:
+  1. inserir um contato
+  2. remover um contato dado o email
+  3. listar todos os contatos
+  4. listar os contatos dado parte do nome, email ou telefone.
+
+Cada contato tem: Nome, email e telefone
+precisa usar arquivo (texto ou binario) no inicio do programa se o arquivo existir este deve ser lido e no final deve ser gravado (ref: aula-2020-11-04-Eleicao-parte 4 - arqTxt.c).
+
+
+2-(3.0) Sua empresa foi contratada para fazer um programa para controlar o estoque de uma loja de brinquedos. 
+   Para cada brinquedo temos: 
+	codigo: inteiro, 
+	categoria : string[20], 
+	nome : string[30], 
+	preco : real, 
+	quantidade : inteiro
+
+   no programa dever ser possivel realizar as seguintes operacoes:
+    1. inserir brinquedo
+	dado o codigo do brinquedo veja se ele ja existe ou nao 
+		se ja existir solicite a quantidade e adicione a quantidade lida ao brinquedo ja existente
+                se nao existir solicite todos os dados e adicione o novo brinquedo
+    2. remover brinquedo  (dado o codigo e a qtd)
+        se a qtd for zero remover o registro do brinquedo
+        se a qtd > 0 diminuir a quantidade (validar se tem aquela qtd) 
+    3. atualizar dados do brinquedo
+    4. listar todos
+    5. listar todos de uma categoria
+    6. listar filtrando por parte do nome ou categoria (obs da uma olhada na funcao strstr)
+   
+3-(2.5) Fazer o jogo da velha para 2 dois jogadores
+
+4-(2.0) Fazer um programa que leia dois conjuntos de numeros reais A e B (no maximo 100), na sequencia mostre
+   I - a uniao dos conjuntos A U B
+  II - a intersecção entre os conjuntos A  B
+ III - a diferença A - B
+	
+obs: conjuntos nao tem elementos repetidos, logo isso deve ser garantido em todas as operacoes

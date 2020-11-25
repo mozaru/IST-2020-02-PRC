@@ -9,4 +9,4 @@ rem gcc -c frmlistar.c -o frmlistar.obj
 
 gcc disciplinas.obj principal.obj guiconsole.obj -o historicoConsole.exe 
 
-gcc disciplinas.obj principal.obj guiwin.obj -o historicoWin.exe -liupcontrols -liupcd -lcd -lfreetype6 -lz -liup -lgdi32 -lcomdlg32 -lcomctl32 -luuid -loleaut32 -lole32
+gcc disciplinas.obj principal.obj guiwin.obj -o historicoWin.exe -liupimglib -liupcontrols -liupcd -lcd -lfreetype6 -lz -liup -lgdi32 -lcomdlg32 -lcomctl32 -luuid -loleaut32 -lole32

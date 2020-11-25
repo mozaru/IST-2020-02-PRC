@@ -17,6 +17,9 @@ void inicializarInterface(int argc, char *argv[])
 {
     IupOpen(&argc, &argv);
     IupControlsOpen();
+    IupImageLibOpen();
+    IupSetGlobal("IMAGESTOCKSIZE","48");
+     
 }
 
 void finalizarInterface(int argc, char *argv[])
@@ -55,6 +58,40 @@ Ihandle *criarBotaoDlg(char Nome[])
     IupSetAttribute(btn, "USERSIZE", "180x60");
     return btn;
 }
+
+void adicionarAcao(Ihandle* menu, Ihandle* toolBar, char Nome[], char Image[], char tooltip[])
+{
+    if (toolBar!=NULL) {
+        if (Nome == NULL)
+            IupAppend(toolBar, IupSetAttributes(IupLabel(NULL), "SEPARATOR=VERTICAL"));
+        else {
+            Ihandle *btn = IupButton(Nome, NULL);
+            IupSetCallback(btn, "ACTION", (Icallback)callbackAcao);
+            IupSetAttribute(btn, "USERSIZE", "180x60");
+            IupSetAttribute(btn, "FLAT", "Yes");
+            //IupSetAttribute(btn, "CANFOCUS", "No")        
+            if(Image!=NULL)
+                IupSetAttribute(btn, "IMAGE", Image);
+            if (tooltip!=NULL)
+                IupSetAttribute(btn, "TIP", tooltip);
+            IupAppend(toolBar, btn);
+        }
+    }
+    if (menu!=NULL){
+        if (Nome==NULL)
+           IupAppend(menu, IupSeparator());
+        else{
+            Ihandle *item = IupSubmenu(Nome,NULL);
+            //IupSetCallback(item, "ACTION", (Icallback)callbackAcao);
+            IupAppend(menu, item);
+            //if(Image!=NULL)
+            //    IupSetAttribute(item, "IMAGE", Image);
+            //if (tooltip!=NULL)
+            //    IupSetAttribute(item, "TIP", tooltip);
+        }
+    }
+}
+
 
 Ihandle *adicionarEntrada(Ihandle *pnlDados, char Nome[], int Qtd, char valor[])
 {
@@ -214,8 +251,6 @@ void mostrarMensagem(char mensagem[])
     IupMainLoop();
 
     IupDestroy(dlg);
-
-    return (opc == 1) ? IupGetInt(tbxCod, "VALUE") : -1;
 }
 
 
@@ -349,9 +384,12 @@ int lerDisciplina(Disciplina *d)
 
 void mostrarHistorico(Historico h)
 {
-    Ihandle *dlg, *label, *vbox, *sep, *pnlBotoes, *pnlDados;
+    Ihandle *dlg, *label, *vbox, *sep, *pnlBotoes, *pnlDados, *menu;
     int i;
 
+    menu = IupMenu(
+        IupSubmenu("Teste",NULL)
+        ,NULL);
     label = IupLabel("Disciplinas");
     IupSetAttribute(label, "BGCOLOR", "0 0 255");
     IupSetAttribute(label, "PADDING", "0x10");
@@ -361,12 +399,16 @@ void mostrarHistorico(Historico h)
     IupSetAttribute(sep, "ORIENTATION", "HORIZONTAL");
     IupSetAttribute(sep, "COLOR", "0 0 200");
 
-    pnlBotoes = IupHbox(
-        criarBotaoDlg("Fechar"),
-        NULL);
-    IupSetAttribute(pnlBotoes, "GAP", "50");
-    IupSetAttribute(pnlBotoes, "MARGIN", "0x20");
-
+    pnlBotoes = IupHbox(NULL);
+    IupSetAttribute(pnlBotoes, "GAP", "5");
+    //IupSetAttribute(pnlBotoes, "MARGIN", "0x20");
+    adicionarAcao(menu, pnlBotoes, "&Filtrar", "IUP_EditFind", "Filtrar a lista de disciplina");
+    adicionarAcao(menu, pnlBotoes, "&Inserir", "IUP_FileNew", "Inserir Disciplina");
+    adicionarAcao(menu, pnlBotoes, "&Remover", "IUP_EditErase", "Remover a disciplina selecionada");
+    adicionarAcao(menu, pnlBotoes, "&Alterar", "IUP_FileProperties", "Alterar a disciplina selecionada");
+    adicionarAcao(menu, pnlBotoes, NULL, NULL, NULL);
+    adicionarAcao(menu, pnlBotoes, "&Sair", "IUP_ActionCancel", "Sair");
+    
     pnlDados = IupMatrix(NULL);
 
     IupSetAttribute(pnlDados, "NUMLIN", "10");
@@ -421,16 +463,16 @@ void mostrarHistorico(Historico h)
     vbox = IupVbox(
         label,
         sep,
-        pnlDados,
         pnlBotoes,
+        pnlDados,
         NULL);
     IupSetAttribute(vbox, "ALIGNMENT", "ACENTER");
     IupSetAttribute(vbox, "GAP", "1");
     IupSetAttribute(vbox, "MARGIN", "10x2");
 
     dlg = IupDialog(vbox);
-
-    IupSetAttribute(dlg, "TITLE", "Disciplinas");
+    IupSetAttributeHandle(dlg, "MENU", menu);
+    IupSetAttribute(dlg, "TITLE", "Disciplinas1");
     IupSetAttribute(dlg, "RESIZE", "YES");
     IupSetAttribute(dlg, "SIZE", NULL);
     IupSetAttribute(dlg, "USERSIZE", "1800x900");
