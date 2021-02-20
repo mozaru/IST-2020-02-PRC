@@ -2,6 +2,7 @@
 #include "ui_frmhistorico.h"
 
 #include "disciplinas.h"
+#include <QScreen>
 
 HistModel::HistModel(QObject *parent)
 {
@@ -66,6 +67,14 @@ FrmHistorico::FrmHistorico(QWidget *parent) :
 
     ui->tblInfo->setModel(&model);
 
+
+    #ifdef Q_OS_ANDROID
+        QScreen *screen = QApplication::screens().first();
+        QRect rec = screen->availableGeometry();
+        int height = rec.height();
+        int width = rec.width();
+        setGeometry(0,0,width, height);
+    #endif
 }
 
 FrmHistorico::~FrmHistorico()

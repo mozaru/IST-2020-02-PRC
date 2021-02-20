@@ -8,6 +8,15 @@ FrmDisciplina::FrmDisciplina(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->btnOk, &QPushButton::clicked, [=](){ acao(true); });
     connect(ui->btnCancelar, &QPushButton::clicked, [=](){ acao(false); });
+    #ifdef Q_OS_ANDROID
+        //QScreen *screen = QApplication::screens().first();
+        //QRect rec = screen->availableGeometry();
+        //int height = rec.height();
+        //int width = rec.width();
+        //setGeometry(0,0,width, height-60);
+        resize( minimumSize());
+    #endif
+
 }
 
 FrmDisciplina::~FrmDisciplina()

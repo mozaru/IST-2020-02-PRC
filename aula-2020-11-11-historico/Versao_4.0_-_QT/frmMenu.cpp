@@ -1,5 +1,6 @@
 #include "frmMenu.h"
 #include "ui_frmMenu.h"
+#include<QScreen>
 
 FrmMenu::FrmMenu(QWidget *parent)
     : QDialog(parent)
@@ -12,6 +13,14 @@ FrmMenu::FrmMenu(QWidget *parent)
     connect(ui->btnAlterar, &QPushButton::clicked, [=](){ acao(3); });
     connect(ui->btnHistorico, &QPushButton::clicked, [=](){ acao(4); });
     connect(ui->btnSair, &QPushButton::clicked, [=](){ acao(5); });
+    #ifdef Q_OS_ANDROID
+        QScreen *screen = QApplication::screens().first();
+        QRect rec = screen->availableGeometry();
+        int height = rec.height();
+        int width = rec.width();
+        setGeometry(0,0,width, height);
+    #endif
+
 }
 
 FrmMenu::~FrmMenu()

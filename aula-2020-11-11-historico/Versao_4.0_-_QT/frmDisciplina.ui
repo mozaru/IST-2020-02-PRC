@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>749</width>
-    <height>328</height>
+    <width>450</width>
+    <height>330</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>330</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -19,6 +25,9 @@
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetDefaultConstraint</enum>
+   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
@@ -124,7 +133,7 @@
        <item>
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>Semestre</string>
+          <string>Sem.</string>
          </property>
         </widget>
        </item>
@@ -252,7 +261,7 @@
         <widget class="QPushButton" name="btnOk">
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -268,7 +277,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>40</width>
+           <width>100</width>
            <height>20</height>
           </size>
          </property>
@@ -278,7 +287,7 @@
         <widget class="QPushButton" name="btnCancelar">
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
